@@ -1,0 +1,174 @@
+<html>
+    <head>
+
+
+        <style>
+            .player-options img{
+                max-width: 125px;
+                opacity: 0.3;
+                cursor: pointer;
+            }
+            .enemy-options img{
+                max-width: 125px;
+                opacity: 0.3;
+            }
+            .align{
+                display: flex;
+                justify-content: space-around;
+            }
+        </style>
+
+    </head>
+    <body>
+        <div id="header">
+            <h1 style="text-align: center;">Rock Paper Scissor</h1>
+            <h2 style="text-align: center;" class="vencedor">Who will win?</h2>
+            <hr>
+        </div>
+
+        <div class="align">
+            <div class="player-options">
+                <h3 style="text-align: center; margin: 0;">Player</h3>
+                <div> <img opt="rock" src="rock.png"/> </div>
+                <div> <img opt="paper" src="paper.png"/> </div>
+                <div> <img opt="scissor" src="scissor.png"/> </div>
+
+            </div>
+            <div class="placar">
+                <h2 style="text-align: center; margin: 0;">Score</h2>
+                <h3 class="score" style="text-align: center; margin: 0;">0 : 0</h3>
+            </div>
+            <div class="enemy-options">
+                <h3 style="text-align: center; margin: 0;">Enemy</h3>
+                <div> <img opt="rock" src="rock.png"/> </div>
+                <div> <img opt="paper" src="paper.png"/> </div>
+                <div> <img opt="scissor" src="scissor.png"/> </div>
+
+            </div>
+        </div>
+        <script>
+            var elementos = document.querySelectorAll('.player-options div > img');
+            const enemyOptions = document.querySelectorAll('.enemy-options div > img');
+            var playerOpt = "";
+            var enemyOpt = "";
+            var playerPoint = 0;
+            var enemyPoint = 0;
+
+            function victory(){
+
+                let vencedor = document.querySelector('.vencedor');
+                let score = document.querySelector('.score');
+                if(playerOpt == "paper"){
+
+                    if(enemyOpt == "paper"){
+                    
+                        vencedor.innerHTML = "Draw";
+                    }else if(enemyOpt == "scissor"){
+                        enemyPoint = enemyPoint + 1;
+
+                        score.innerHTML = playerPoint + " : " + enemyPoint;
+                        vencedor.innerHTML = "Enemy wins";
+                    }else if(enemyOpt == "rock"){
+                        playerPoint = playerPoint + 1;
+
+                        score.innerHTML = playerPoint + " : " + enemyPoint;
+                        vencedor.innerHTML = "Player wins";
+                    }
+
+
+                }
+
+
+                if(playerOpt == "scissor"){
+
+                    if(enemyOpt == "paper"){
+                        playerPoint = playerPoint + 1;
+
+                        score.innerHTML = playerPoint + " : " + enemyPoint;
+                        vencedor.innerHTML = "Player wins";
+                    }else if(enemyOpt == "scissor"){
+                    
+                        vencedor.innerHTML = "Draw";
+                    }else if(enemyOpt == "rock"){
+                        enemyPoint = enemyPoint + 1;
+
+                        score.innerHTML = playerPoint + " : " + enemyPoint;
+                        vencedor.innerHTML = "Enemy wins";
+                    }
+
+
+                }
+
+                if(playerOpt == "rock"){
+
+                    if(enemyOpt == "paper"){
+                        enemyPoint = enemyPoint + 1;
+
+                        score.innerHTML = playerPoint + " : " + enemyPoint;
+                        vencedor.innerHTML = "Enemy wins";
+                    }else if(enemyOpt == "scissor"){
+                        playerPoint = playerPoint + 1;
+
+                        score.innerHTML = playerPoint + " : " + enemyPoint;
+                        vencedor.innerHTML = "Player wins";
+                    }else if(enemyOpt == "rock"){
+
+                        vencedor.innerHTML = "Draw";
+                        
+                    }
+
+
+                }
+
+
+
+            }
+
+
+            function resetEnemy(){
+                for(var i = 0; i < enemyOptions.length; i++){
+                    enemyOptions[i].style.opacity = 0.3;
+
+                }
+            }
+
+            function enemyPlay(){
+                let rand = Math.floor(Math.random()*3);
+
+                
+                resetEnemy();
+                for(var i = 0; i < enemyOptions.length; i++){
+                    if(i == rand){
+                        enemyOptions[i].style.opacity = 1;
+                        enemyOpt = enemyOptions[i].getAttribute('opt');
+                    
+
+                    }
+                }
+            
+                victory();
+                
+            }
+        
+
+            function resetOpacityPlayer(){
+                for(var i = 0; i < elementos.length; i++){
+                    elementos[i].style.opacity = 0.3;
+                
+                }
+            }
+
+            for(var i = 0; i < elementos.length; i++){
+                elementos[i].addEventListener('click',(t)=>{
+                    resetOpacityPlayer();
+                    t.target.style.opacity = 1;
+                    playerOpt = t.target.getAttribute('opt');
+
+                    
+                    enemyPlay();
+                    
+                });
+            }
+        </script>
+    </body>
+</html>
